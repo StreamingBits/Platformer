@@ -187,19 +187,12 @@ public class Play extends GameState {
 			float distance, float x, float y, float directionDegree,
 			float coneDegree) {*/
         
-//        rh.setShadows(true);
-//        pL5 = new PointLight(rh, 4000, Color.RED, 1000f, 200f, 10f);
-//        pL1 = new PointLight(rh, 3000, Color.BLUE, 500f, 600f, 150f);
-//          cL1 = new ConeLight(rh, 3000, Color.DARK_GRAY, 2000f, 50f, 300f, 270, 10);
+
         cL2 = new ConeLight(rh, 1200, Color.BLUE, 1200f, 755f, 50f , 90f, 10);
         cL3 = new ConeLight(rh, 1200, Color.GREEN, 1200f, 755f, 50f, 90f, 5);
         pL1 = new PointLight(rh, 2000, Color.RED, 150f, 755f, 20f);
         pL5 = new PointLight(rh, 2000, Color.DARK_GRAY, 330f, 770f, 20f);
         cL4 = new ConeLight(rh, 1200, Color.MAGENTA, 600f, 755f, 400f, 470f, 1.5f);
-//          cL3 = new ConeLight(rh, 3000, Color.GRAY, 200f, 500, 200f, 250f, 25);
-//          cL2 = new ConeLight(rh, 3000, Color.MAGENTA, 200f, 300, 200f, 330f, 25);
-//          cL4 = new ConeLight(rh, 3000, Color.CYAN, 200f, 300, 200f, 300f, 25);
-//        cL4 = new ConeLight(rh, 1000, Color.CYAN, 1400f, 1400f, 1100f, 270f, 65 );
 
          
         // createEnemy();
@@ -287,10 +280,9 @@ public class Play extends GameState {
         
         world.step(dt, 8, 3);
         
-//        pL5.attachToBody(player.getBody(), 5f, 10f);
+
         Array<Body> bodies = cl.getDeadBodies();
         Array<Body> removableBP = cl.removeCollectedAmmo();
-// player.update(dt);
          
          if(level == 4){
             //verticalAccelerationChambers.clear();
@@ -334,7 +326,6 @@ public class Play extends GameState {
 
         if(cl.isPlayerInVAC()){
              player.getBody().setGravityScale(0f);
-         //player.getBody().setLinearVelocity(.2f, .1f);
         }
         else{
              player.getBody().setGravityScale(1f);
@@ -766,6 +757,8 @@ public class Play extends GameState {
                 shape.dispose();
         }
     }
+     
+     
    /**ConeLight(RayHandler rayHandler, int rays, Color color,
 			float distance, float x, float y, float directionDegree,
 			float coneDegree)*/
