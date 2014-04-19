@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="20" tilewidth="32" tileheight="32" backgroundcolor="#3043f1">
+ <tileset firstgid="1" name="background1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/background1.png" trans="ffffff" width="1280" height="256"/>
+ </tileset>
+ <tileset firstgid="321" name="city_2" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/city_2.png" trans="ffffff" width="640" height="320"/>
+ </tileset>
+ <tileset firstgid="521" name="ground1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/ground1.png" trans="ffffff" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="546" name="sp11" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/sp11.png" trans="ffffff" width="224" height="160"/>
+ </tileset>
+ <tileset firstgid="581" name="fallwinter2" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/fallwinter2.png" trans="ffffff" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="645" name="b_debree3" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/b_debree3.png" trans="ffffff" width="64" height="96"/>
+ </tileset>
+ <tileset firstgid="651" name="light" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/light.jpg" trans="ffffff" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="676" name="villagebuildin" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/villagebuildin.png" trans="ffffff" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="701" name="2Dsidescroll_examp4" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Downloads/2D_SidescrollerAFREE/2D_SidescrollAFREE/2Dsidescroll_examp4.jpg" trans="ffffff" width="734" height="596"/>
+ </tileset>
+ <layer name="T3" width="64" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC/NmYhjRwHvU/yMaDGX/z2OCYEpAMAH9MDsGOyYXxAzh+KcGoIb/G5kQGJsYIUyqPdQEhNI/tQA1/E8LEExFN+AzB1/6qAbiFhzugMnRCkSP8PxPy/SPLe5oHZ+kAnrl/8EKRnr6p3b9nw00L2cIhelIj/+hkv9pVW5SGv+g9B48xNI8MkDP/0Mt/1IKQoB+1WFhYNAFYj0g1mehrX0wOwwI2AOSNwRibRZM9+HSi55HiMkzIP87Ac1zBmIXIHYF4slM+LE7UI0HC4J2ZME0w40IeXwApp8cvaQAAE60VKIAFAAA
+  </data>
+ </layer>
+ <layer name="T2" width="64" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TTU7CQBjG8dqBIwiCyCGECyCSgDtWCiTIBcpXgAuASoATyEfAEyAY5XbyX7QJThpWJoTp+yS/tjPd9Jm8tSyJRCKRSCQSSdDya3NRlnUBG0p71t+FEFan/ur/yyVdIoi6DtdXiCGOayRwg6RB/TN0uUMW98gp/z0Ht0ghbVD/R7o8oYQyKsp/r488Cng40r94Zmfjzbs+937/QBXPqJ1Zx2Nx3Nmuu/fmwbrhrltoo4Muegb21w3wgle8YYgRxpgY1L+v/vL6v2OKGeZYYIkVPgzqr8c7hzU+scEWX/jGD3YG9w9S9j0nn9AAFAAA
+  </data>
+ </layer>
+ <layer name="T1" width="64" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCkYBJaCRCTceyYBQGLgw0s8tgxFEDFP/VwPjvIWJsNgoGAXDBWQD03YONH2rA2kNtLS+FMhfNgzTvyYOP+kPQ79iAwY4/Gk2zP0PSu/BSGl+qIPsYeSXUTAKCAEAUAie5AAUAAA=
+  </data>
+ </layer>
+ <objectgroup name="mP" width="64" height="20">
+  <object x="226" y="546" width="90" height="31"/>
+  <object x="1080" y="516" width="84" height="31"/>
+ </objectgroup>
+ <objectgroup name="crystals" width="64" height="20">
+  <object x="1092" y="485" width="22" height="22">
+   <ellipse/>
+  </object>
+  <object x="1126" y="456" width="20" height="20">
+   <ellipse/>
+  </object>
+  <object x="1157" y="425" width="20" height="20">
+   <ellipse/>
+  </object>
+  <object x="1189" y="293" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object x="1253" y="335" width="26" height="26">
+   <ellipse/>
+  </object>
+  <object x="1302" y="378" width="26" height="26">
+   <ellipse/>
+  </object>
+  <object x="224" y="499" width="28" height="28">
+   <ellipse/>
+  </object>
+  <object x="478" y="445" width="31" height="31">
+   <ellipse/>
+  </object>
+  <object x="662" y="377" width="28" height="28">
+   <ellipse/>
+  </object>
+  <object x="750" y="284" width="24" height="24">
+   <ellipse/>
+  </object>
+  <object x="1656" y="528" width="24" height="24">
+   <ellipse/>
+  </object>
+  <object x="1776" y="532" width="27" height="27">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="12" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="platform11" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/platform11.jpg" width="792" height="612"/>
+ </tileset>
+ <tileset firstgid="457" name="steampunk_examplemap" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/steampunk_examplemap.png" width="512" height="392"/>
+ </tileset>
+ <tileset firstgid="649" name="techblocks2_1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/techblocks2_1.png" width="256" height="224"/>
+ </tileset>
+ <tileset firstgid="705" name="city_2" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/city_2.png" width="2937" height="532"/>
+ </tileset>
+ <tileset firstgid="2161" name="AIN_FloorsSet1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/AIN_FloorsSet1.png" width="256" height="192"/>
+ </tileset>
+ <tileset firstgid="2209" name="TileA2" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/TileA2.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="2401" name="test1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/test1.png" trans="ffffff" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2405" name="doorway" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/doorway.png" trans="ffffff" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2409" name="sp11" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/sp11.png" trans="ffffff" width="224" height="160"/>
+ </tileset>
+ <tileset firstgid="2444" name="city_2" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/city_2.png" trans="ffffff" width="640" height="320"/>
+ </tileset>
+ <tileset firstgid="2644" name="background1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/background1.png" trans="ffffff" width="1280" height="256"/>
+ </tileset>
+ <tileset firstgid="2964" name="ground1" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/ground1.png" trans="ffffff" width="160" height="160"/>
+ </tileset>
+ <layer name="T3" width="64" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGNrAnZEyTAvgz4jAtAbNjLjxcUaGBcchNAw3IGEQX4H2LqQtaMYRxsj+72bAjqntf2lGCKYnmMNNX/uQAcy/9PYzMqDE/+hpB9k/2Pw00H7FBqjp/6EIKPX/Ig7KMDIgR38iJ2WYkjikRO9zoNunD+L044yEcQFq+H+whYEzFowLDKf4x+ZvfP6HtZHIBcjxTy2swEA6xudvGMbXRgQAezBxrgAMAAA=
+  </data>
+ </layer>
+ <layer name="T2" width="64" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+XPaZTNdRwG8DsTGvcWKUsq2ZNWRSuVnZBdpVJoQ7sK1TDDmBnMPiODSvaytFsq0yZLRdsU7WnVSmihTPG5p/vS3IPbC43nnM953vz/v/N8s4OBQA655JFPARO5n0kUMpkpTOUBHuQhpvEw05nBTGYRTqIeySiSSGY0Y0hhLKmkkc44xjOBDDLJIjvKxlizxBtLeZbneJ5lFPECL/ISL/MKy3mVFaxkFat5jdd5gzWRXbP1HObyCI8yj/ksYCGP8ThP8CRP8TTPsIjFwegbY83n3tjAF3zJV3zNN3zLRr7je37gR37iZzaxmV/Ywla28Wtk11r9Jm/xNu/wLsW8x/usYz0f8CEf8TGf8CmfBaNvDKe0jXuTCqFA4FASqEiQEIdxOJWozBFU4UiOoirVqE4NjqYmx3Bs6N+3f7Phd/5gOzv4k7/YSQl/8w+7wnv9F0c8h1CO8qHoG8PZ340l/j1Nn04TzuBMmtKMszibcziX8zif5rTgAi7kIlrSita0iew6TtfieGpTh7rUoz4NaMgJNOJEGnMSJ3MKp4aibwwnlo2X6su4nL5cwZVcRT+u5hr6M4CBXMt1XM8N3MggBjOEmyJvt9XtaE8HOnIxnehMFy6hK93oTg960ove9AlF3xhOLBtH6SSSGc0YUhhLKmmkM47xTCCDTLLIJodc8sinIPL2zfoWbuU2bucOhnInd3E3wxjOCO7hXu4jkZGh6BvDiWVjWUhR3P45kFIYv2/fFyfs/W3/h/v3NaXdv6ccDPdHS1m7/b/MbmeQSqIADAAA
+  </data>
+ </layer>
+ <layer name="T1" width="64" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WWQrCMBRFo3+he3CD6ocTOIETVO2XKDEfugAncCluyVtM8CEh1ZpItV44JC+hhZOENoy5z4Xwj99sg/fwldDDO8ucsQqo8vuYzeOX/GtwroMGaIIWT34mKd/k34ZvB3RBD/Rz5j+A7xCMwBhMcuYfwncKZmAOIkf+e3AAO9I/gpPCNP7s2OYDxFmjFcGtlapPa9O8VN8/WUhPnFLRHRJEiiVYkNqEdqJeuqahc4KsiQt/l2uwenW9iLt2NIU607OQtf0/p/DXbrY8ng9B/v8u9j/rsd1/rsFN74YADAAA
+  </data>
+ </layer>
+ <objectgroup name="crystals" width="64" height="12">
+  <object x="371" y="89" width="27" height="24">
+   <ellipse/>
+  </object>
+  <object x="878" y="57" width="31" height="27">
+   <ellipse/>
+  </object>
+  <object x="452" y="50" width="21" height="22">
+   <ellipse/>
+  </object>
+  <object x="538" y="28" width="28" height="26">
+   <ellipse/>
+  </object>
+  <object x="609" y="169" width="27" height="22">
+   <ellipse/>
+  </object>
+  <object x="521" y="87" width="21" height="18">
+   <ellipse/>
+  </object>
+  <object x="491" y="47" width="20" height="19">
+   <ellipse/>
+  </object>
+  <object x="445" y="91" width="23" height="21">
+   <ellipse/>
+  </object>
+  <object x="361" y="34" width="27" height="22">
+   <ellipse/>
+  </object>
+  <object x="407" y="55" width="22" height="22">
+   <ellipse/>
+  </object>
+  <object x="424" y="19" width="25" height="20">
+   <ellipse/>
+  </object>
+  <object x="414" y="89" width="20" height="25">
+   <ellipse/>
+  </object>
+  <object x="486" y="86" width="20" height="21">
+   <ellipse/>
+  </object>
+  <object x="391" y="134" width="31" height="23">
+   <ellipse/>
+  </object>
+  <object x="363" y="134" width="19" height="23">
+   <ellipse/>
+  </object>
+  <object x="443" y="151" width="19" height="26">
+   <ellipse/>
+  </object>
+  <object x="966" y="276" height="11">
+   <ellipse/>
+  </object>
+  <object x="925" y="289">
+   <ellipse/>
+  </object>
+  <object x="958" y="275" width="19" height="22">
+   <ellipse/>
+  </object>
+  <object x="868" y="277" width="28" height="18">
+   <ellipse/>
+  </object>
+  <object x="826" y="286" width="28" height="3">
+   <ellipse/>
+  </object>
+  <object x="793" y="270" width="11" height="25">
+   <ellipse/>
+  </object>
+  <object x="751" y="269" width="23" height="26">
+   <ellipse/>
+  </object>
+  <object x="715" y="272" width="18" height="23">
+   <ellipse/>
+  </object>
+  <object x="684" y="273" width="15" height="21">
+   <ellipse/>
+  </object>
+  <object x="655" y="270" width="15" height="27">
+   <ellipse/>
+  </object>
+  <object x="630" y="279" width="13" height="28">
+   <ellipse/>
+  </object>
+  <object x="612" y="273" width="19" height="26">
+   <ellipse/>
+  </object>
+  <object x="570" y="266" width="28" height="28">
+   <ellipse/>
+  </object>
+  <object x="544" y="272" width="20" height="22">
+   <ellipse/>
+  </object>
+  <object x="571" y="316" width="38" height="16">
+   <ellipse/>
+  </object>
+  <object x="625" y="327" width="21" height="20">
+   <ellipse/>
+  </object>
+  <object x="661" y="320" width="38" height="16">
+   <ellipse/>
+  </object>
+  <object x="709" y="310" width="32" height="35">
+   <ellipse/>
+  </object>
+  <object x="752" y="308" width="29" height="33">
+   <ellipse/>
+  </object>
+  <object x="788" y="310" width="29" height="22">
+   <ellipse/>
+  </object>
+  <object x="834" y="301" width="26" height="35">
+   <ellipse/>
+  </object>
+  <object x="868" y="313" width="34" height="27">
+   <ellipse/>
+  </object>
+  <object x="916" y="319" width="21" height="20">
+   <ellipse/>
+  </object>
+  <object x="946" y="309" width="18" height="24">
+   <ellipse/>
+  </object>
+  <object x="972" y="326" width="15" height="18">
+   <ellipse/>
+  </object>
+  <object x="527" y="327" width="24" height="15">
+   <ellipse/>
+  </object>
+  <object x="536" y="225" width="13" height="21">
+   <ellipse/>
+  </object>
+  <object x="567" y="231" width="21" height="14">
+   <ellipse/>
+  </object>
+  <object x="530" y="187" width="40" height="27">
+   <ellipse/>
+  </object>
+  <object x="476" y="180" width="23" height="27">
+   <ellipse/>
+  </object>
+  <object x="663" y="181" width="36" height="17">
+   <ellipse/>
+  </object>
+  <object x="725" y="157" width="37" height="30">
+   <ellipse/>
+  </object>
+  <object x="788" y="149" width="21" height="23">
+   <ellipse/>
+  </object>
+  <object x="692" y="17" width="22" height="14">
+   <ellipse/>
+  </object>
+  <object x="727" y="19" width="24" height="23">
+   <ellipse/>
+  </object>
+  <object x="754" y="16" width="36" height="17">
+   <ellipse/>
+  </object>
+  <object x="657" y="3" width="22" height="27">
+   <ellipse/>
+  </object>
+  <object x="611" y="32" width="24" height="23">
+   <ellipse/>
+  </object>
+  <object x="641" y="61" width="29" height="17">
+   <ellipse/>
+  </object>
+  <object x="591" y="64" width="9" height="22">
+   <ellipse/>
+  </object>
+  <object x="552" y="84" width="35" height="38">
+   <ellipse/>
+  </object>
+  <object x="589" y="129" width="20" height="20">
+   <ellipse/>
+  </object>
+  <object x="670" y="130" width="32" height="20">
+   <ellipse/>
+  </object>
+  <object x="711" y="99" width="37" height="25">
+   <ellipse/>
+  </object>
+  <object x="773" y="92" width="28" height="29">
+   <ellipse/>
+  </object>
+  <object x="830" y="117" width="33" height="16">
+   <ellipse/>
+  </object>
+  <object x="885" y="143" width="39" height="47">
+   <ellipse/>
+  </object>
+  <object x="828" y="165" width="30" height="20">
+   <ellipse/>
+  </object>
+  <object x="948" y="107" width="28" height="42">
+   <ellipse/>
+  </object>
+  <object x="262" y="113" width="33" height="46">
+   <ellipse/>
+  </object>
+  <object x="247" y="166" width="25" height="26">
+   <ellipse/>
+  </object>
+  <object x="313" y="175" width="33" height="17">
+   <ellipse/>
+  </object>
+  <object x="317" y="126" width="21" height="26">
+   <ellipse/>
+  </object>
+  <object x="282" y="171" width="16" height="21">
+   <ellipse/>
+  </object>
+  <object x="225" y="97" width="23" height="38">
+   <ellipse/>
+  </object>
+  <object x="270" y="77" width="57" height="37">
+   <ellipse/>
+  </object>
+  <object x="325" y="64" width="32" height="24">
+   <ellipse/>
+  </object>
+  <object x="339" y="104" width="19" height="20">
+   <ellipse/>
+  </object>
+  <object x="234" y="54" width="25" height="30">
+   <ellipse/>
+  </object>
+  <object x="184" y="106" width="31" height="31">
+   <ellipse/>
+  </object>
+  <object x="147" y="116" width="20" height="19">
+   <ellipse/>
+  </object>
+  <object x="107" y="117" width="29" height="21">
+   <ellipse/>
+  </object>
+  <object x="74" y="127" width="28" height="17">
+   <ellipse/>
+  </object>
+  <object x="102" y="144">
+   <ellipse/>
+  </object>
+  <object x="989" y="152" width="27" height="37">
+   <ellipse/>
+  </object>
+  <object x="49" y="158" width="32" height="39">
+   <ellipse/>
+  </object>
+  <object x="176" y="59" width="31" height="28">
+   <ellipse/>
+  </object>
+  <object x="118" y="55" width="41" height="34">
+   <ellipse/>
+  </object>
+  <object x="289" y="37" width="24" height="24">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

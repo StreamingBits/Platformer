@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="84" height="42" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="platform11" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/platform11.jpg" trans="ffffff" width="792" height="612"/>
+ </tileset>
+ <tileset firstgid="457" name="TileC" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/TileC.png" trans="ffffff" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="713" name="panels" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/MY TILES 3232/panels.png" trans="ffffff" width="128" height="96"/>
+ </tileset>
+ <tileset firstgid="725" name="TileD" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../Desktop/Tiles/TileD.png" trans="ffffff" width="512" height="512"/>
+ </tileset>
+ <layer name="T3" width="84" height="42">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WQW6DMBBFba7RXU6SE2TRC7S9SSW4BUjNPsssyrabJj1Gb1JPwJIzguLCp1E0/0lfEIIs8fQZ7BwhhBBCCCH/x4NfFnINnWChTyz0iYU+sdAnFvrEQp9Y6BMLfWKhTyxon7skFvkMOYWcQ77630PE/6fYqZwAOf/9sW5GGfpZ9YnnY+T07s13eSnc66G4HLdytEIdnr3pE89/Q/dP5913EZ9yv/hsDc3oMunmVD9zEJetYZ910s3oU8/UJYjPvSGfaS8rQD81waez1M/UJ+J914jP0pjPSnUUiTWf6fyM33nNU7j27IePQ9e+XRdBfNaGfMb3HfV9F7TPoyGftb/O1P4zd02rPnU/EbPuSJ+zM7YGfeYnnQ+CnhkbZ9fnZmHG1qBPbKz6fFxpXfrEQp/rYM3nR+G2a64vPTXmc1Ws+dR7x7E0mffpDO1Z5+Re+AH/89TaIDcAAA==
+  </data>
+ </layer>
+ <layer name="T2" width="84" height="42">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WTQrCMBBA4Ziu1Fv3Bh7M33SnC/d6AXVjQlIIQ4pCRkXyPhiapFDwKVhjAAAAAAAAAAAAAPyb88yY3sYr6o0d6amDnp9BT1301EVPXfTUwf+RLnrWuft395ufh417etZZdMbM/Sy7uKenLnrqoqcueupquaezcQ5pwnoQ1/xcTn4+PqPlnrKFy/alhu+c07P82xzP3MR66rtw4j20Ja967gv9jmnC+iTur9ME4bqzv/183zYUmsm9XF/ShPVV3N+kCbY2DuqtGuz4BHy8/NwgNwAA
+  </data>
+ </layer>
+ <layer name="T4" width="84" height="42">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3XsQkAIBAEwQf7r0dMjC3LK+DBzGgGtoitAgAAAAAAgL/26AMAAICXlX88afpIAAAA4gIg2Yd9IDcAAA==
+  </data>
+ </layer>
+ <layer name="T1" width="84" height="42">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WsQmAMBAF0MDN4D6OkGUt3CBjqUXAFIKmCYb34HPFNcdVPyUAAAAAAACAeeV4DgAA8D8l2gkAAD22j31y0T9fuXr6PdUe7f785zrkQKZ0AApN2MMgNwAA
+  </data>
+ </layer>
+ <objectgroup color="#002ba4" name="mP" width="84" height="42">
+  <object x="145" y="560" width="119" height="33"/>
+ </objectgroup>
+ <objectgroup color="#2aa421" name="crystals" width="84" height="42">
+  <object x="224" y="736" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="864" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="608" y="864">
+   <ellipse/>
+  </object>
+  <object x="498" y="460" height="2">
+   <ellipse/>
+  </object>
+  <object x="480" y="832">
+   <ellipse/>
+  </object>
+  <object x="544" y="960" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="512" y="1248" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="512" y="480" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="448" y="512" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="608" y="480" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="704" y="544" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="800" y="576" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="1088" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="1152" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="1184" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="1120" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="1056" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="832" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="768" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="736" y="992" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="608" y="960" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="576" y="960" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="640" y="992" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="608" y="992" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="576" y="992" width="32" height="32">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#a40a21" name="bombs" width="84" height="42">
+  <object x="448" y="736" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="416" y="672" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="512" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="448" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="576" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="608" y="672" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="384" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="bulletPacks" width="84" height="42">
+  <object x="308" y="965" width="37" height="28">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#06a413" name="VAC" width="84" height="42">
+  <object x="772" y="920" width="16" height="392"/>
+  <object x="975" y="924">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#aa0000" name="sensors" width="84" height="42">
+  <object x="415" y="1008" width="71" height="15"/>
+ </objectgroup>
+ <objectgroup color="#97a409" name="mDoor" width="84" height="42">
+  <object x="516" y="937" width="20" height="81"/>
+ </objectgroup>
+ <objectgroup color="#a40505" name="stopper" width="84" height="42">
+  <object x="515" y="924">
+   <polygon points="0,0 13,-19 23,0"/>
+  </object>
+  <object x="515" y="1124">
+   <polygon points="0,0 12,21 24,0"/>
+  </object>
+ </objectgroup>
+</map>
