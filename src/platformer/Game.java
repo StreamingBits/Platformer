@@ -43,6 +43,19 @@ public class Game implements ApplicationListener {
     sb = new SpriteBatch();
     res = new Content();
     
+      res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" 
+    + "Platformer/src/res/sprites/ok.png", "ok");
+    
+      res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/"
+      + "Platformer/src/res/sprites/spikedWall.png", "WOD");
+      
+      res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" 
+    + "Platformer/src/res/sprites/store.png", "storeBtn");
+        
+      res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" 
+    + "Platformer/src/res/sprites/storePage.png", "storePage");
+      
+     
     //***PLAYER SPRITE***//
     res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/"
     + "Platformer/src/res/sprites/elaine.png", "Pic 1");
@@ -61,6 +74,9 @@ public class Game implements ApplicationListener {
     res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" 
     + "Platformer/src/res/sprites/movingDoor.png", "movingDoor");
     
+    //**FALLING PLATFORM SPRITE ***//
+     res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" 
+    + "Platformer/src/res/sprites/fallingPlatform.png", "fP");
     
     //** BOMB SPRITE **//
     res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" +
@@ -109,7 +125,7 @@ public class Game implements ApplicationListener {
     res.loadTexture("C:/Users/alvarez/Documents/NetBeansProjects/" + 
     "Platformer/src/res/sprites/stopper.png", "stopper");
         //SOUND EFFECTS
-        res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/smb.mp3","main");
+        res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/intro.mp3","main");
         res.getMusic("main").setLooping(true);
 	res.getMusic("main").setVolume(0.07f);
 	res.getMusic("main").play();
@@ -117,6 +133,16 @@ public class Game implements ApplicationListener {
 	res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/jump.wav", "jumping");
         res.getMusic("jumping").setLooping(false);
         res.getMusic("jumping").setVolume(0.12f);
+        
+        
+        res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/select.wav", "select");
+        res.getMusic("select").setLooping(false);
+        res.getMusic("select").setVolume(0.12f);
+        
+         res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/hurt.wav", "hurt");
+        res.getMusic("hurt").setLooping(false);
+        res.getMusic("hurt").setVolume(0.12f);
+        
         
         //**** JET PACK****////////
 	res.loadMusic("C:/Users/alvarez/Documents/NetBeansProjects/Platformer/src/res/sprites/music/jetPack.wav", "jetPack");

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
@@ -46,17 +47,21 @@ import entities.BulletPackage;
 import entities.Car;
 import entities.Enemy;
 import entities.FallingBomb;
+import entities.FallingPlatform;
 import entities.FloorSensor;
+import entities.HAC;
 import entities.HUD;
 import entities.MovingDoor;
 import entities.MovingPlatform;
 import entities.Player;
 import entities.Stopper;
+import entities.WallODeath;
 import entities.verticalAcceleratorArea;
 import static handlers.B2DVars.PPM;
 import handlers.Background;
 import handlers.BoundedCamera;
 import handlers.ConeLight;
+import handlers.GameLoaderUtil;
 import handlers.GameStateManager;
 import handlers.Light;
 import handlers.MyContactListener;
@@ -65,15 +70,25 @@ import handlers.PointLight;
 import handlers.PositionalLight;
 import handlers.RayHandler;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import platformer.Game;
 
 
 public class Play extends GameState {
-       
+        private boolean fileLoaded;
+        private BufferedImage[] downSprites;
+        private BufferedImage[] leftSprites;
+        private BufferedImage[] rightSprites;
+        private BufferedImage[] upSprites;
+        public GameLoaderUtil glu;
+        public int AN;
+
+       public TextureRegion[] currSprite;
        private final boolean debugMODE = false;  
-       public static float MAX_VELOCITY = 3f;
-   
+       public float MAX_VELOCITY = 3f;
+       public int SPRITENO;
        private World world;
        private Box2DDebugRenderer b2dr;
        private OrthographicCamera b2dCam;
@@ -107,7 +122,13 @@ public class Play extends GameState {
        ConeLight cL2;
        ConeLight cL3;
        ConeLight cL4;
+       ConeLight cL5;
+       ConeLight vacCone2;
+       ConeLight vacConeTop;
+       ConeLight v3L;
+       ConeLight v4L;
        
+       //** TIME**/
        private float TIMER;
        private boolean dropItem;
        
@@ -115,63 +136,79 @@ public class Play extends GameState {
        private final Vector2 platformForwardVelocity = new Vector2(.16f, 0f);
        private final Vector2 fallOffScreenPosition = new Vector2(0, -10);
       
+       //** ARRAYS OF ENTITIES **//
        private Array<BasicPowerUp> crystals;
        private Array<MovingPlatform> movingPlatforms;
        private Array<FallingBomb> fallingBombs;
        private Array<Bullet> amtBullets;
        private Array<BulletPackage> bulletPackages;
        private Array<verticalAcceleratorArea> verticalAccelerationChambers;
+       private Array<HAC> HAC_ARRAY;
        private Array<FloorSensor> sensors;
        private Array<MovingDoor> movingDoors;
        private Array<Stopper> stoppers;
+       private Array<FallingPlatform> fallingPlatforms;
+       private Array<WallODeath> wallsOfDeath;
        
        /** LIGHTING LISTS**/
        private Array<Light> regLights;
        private Array<ConeLight> coneLights;
        private Array<PointLight> pointLightsList;
        
+       
+       //LEVEL CONTROL AND ANIMATION//
        public static int level;
        public float xBulletCoord;
        public float yBulletCoord;
        private Background[] backgrounds;
        public SpriteBatch sb2;
-       
+       public int animationControl;
+   
        private RayHandler rh;
+       public Texture tex;
+       public int CONTROLLER;
+       
+       
+       /** SAVING/LOADING STUFF **/
+       public ArrayList<String> rolev;
+       private String role1 = null;
+       private String role2 = null;
+       private String role3 = null;
+       private String role4 = null;
+       
        
     public Play(GameStateManager gsm){
         super(gsm);
-       
+        AN = 0;
+        tex = Game.res.getTexture("Pic 1");
+        SPRITENO = 0;
         TIMER = 0f;
         dropItem = false;
-        //** TO DO IMPLEMENT AUTOMATIC BACKGROUND TEXTURE LOADER SIMILAR TO LEVEL**/
-        if(level == 3){
-            Texture bgs = Game.res.getTexture("bgs");
-            TextureRegion sky = new TextureRegion(bgs, 0, 0, 320, 560);
-            TextureRegion clouds = new TextureRegion(bgs, 0, 560, 320, 240*2);
-            TextureRegion mountains = new TextureRegion(bgs, 0, 400, 320, 240*2);
-            backgrounds = new Background[3];
-            backgrounds[0] = new Background(sky, cam, 0f);
-            backgrounds[1] = new Background(clouds, cam, 0.1f);
-            backgrounds[2] = new Background(mountains, cam, 0.2f);
-        } 
         
+        //** TO DO IMPLEMENT AUTOMATIC BACKGROUND TEXTURE LOADER FOR EACH LEVEL **/
+            if(level == 3){
+                Texture bgs = Game.res.getTexture("bgs");
+                TextureRegion sky = new TextureRegion(bgs, 0, 0, 320, 560);
+                TextureRegion clouds = new TextureRegion(bgs, 0, 560, 320, 240*2);
+                TextureRegion mountains = new TextureRegion(bgs, 0, 400, 320, 240*2);
+                backgrounds = new Background[3];
+                backgrounds[0] = new Background(sky, cam, 0f);
+                backgrounds[1] = new Background(clouds, cam, 0.1f);
+                backgrounds[2] = new Background(mountains, cam, 0.2f);
+            } 
         
-        
-        //Set up box2d shit
+        //BOX2D CAM AND WORLD SETUP
         world = new World(new Vector2(0, -9.81f), true);
         cl = new MyContactListener();
-        
         world.setContactListener(cl);
         b2dr = new Box2DDebugRenderer();
-        // set up box2d cam
         BoundedCamera b2dCam = new BoundedCamera();
         b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT / PPM);
         b2dCam.setBounds(0, (tileMapWidth * tileSize) / PPM, 0, (tileMapHeight * tileSize) / PPM);
-         
         rh = new RayHandler(world);
         rh.setWorld(world);
         
-        
+        //PLAYER SETUP 
         createPlayer();
         player.setMana(900);
         player.setMaxMana(1200);
@@ -183,18 +220,22 @@ public class Play extends GameState {
         rh.setShadows(true);
         rh.setBlur(true);
         rh.setAmbientLight(0.2f, 0.2f, 0.22f, 0.6f);
-/**ConeLight(RayHandler rayHandler, int rays, Color color,
+
+        
+        /**ConeLight(RayHandler rayHandler, int rays, Color color,
 			float distance, float x, float y, float directionDegree,
 			float coneDegree) {*/
-        
-
         cL2 = new ConeLight(rh, 1200, Color.BLUE, 1200f, 755f, 50f , 90f, 10);
         cL3 = new ConeLight(rh, 1200, Color.GREEN, 1200f, 755f, 50f, 90f, 5);
         pL1 = new PointLight(rh, 2000, Color.RED, 150f, 755f, 20f);
         pL5 = new PointLight(rh, 2000, Color.DARK_GRAY, 330f, 770f, 20f);
         cL4 = new ConeLight(rh, 1200, Color.MAGENTA, 600f, 755f, 400f, 470f, 1.5f);
 
-         
+        vacCone2 = new ConeLight(rh, 1200, Color.CYAN, 1400f, 1600f, 320f, 90f, 5f);
+        vacConeTop = new ConeLight(rh, 1200, Color.RED, 1400f,1535f, 370f, 360f, 5f);
+        cL5 = new ConeLight(rh, 2000, Color.DARK_GRAY, 800, 1535f, 370f, 360f, 7f);
+        v3L = new ConeLight(rh, 1200, Color.CYAN, 1400f, 1965f, 320f, 90f, 5f);
+        v4L = new ConeLight(rh, 1222, Color.RED, 700f, 1965f, 1120f, 270f, 15f);
         // createEnemy();
         createTiles();
         hud = new HUD(player);
@@ -202,10 +243,14 @@ public class Play extends GameState {
         
         
         createMovingPlatform();
+       
         createFallingBomb();
         
         if(level == 4){
             createVACS();
+            createWall_O_Death();
+            createHACS();
+            createFallingPlatforms();
             createSensors();
             createStoppers();
             createMovingDoor();
@@ -222,23 +267,41 @@ public class Play extends GameState {
     //BUTTON4 - LEFT
     //BUTTON5 - SPACE
     public void handleInput(){
+        //** SAVE THE GAME **//
+        if(MyInput.isDown(MyInput.BUTTON6)){
+            glu = new GameLoaderUtil("XMLTEST.xml");
+            
+            try{
+                String currHealth = Integer.toString(player.getHealth());
+                glu.save(currHealth);
+            }catch(Exception e){}
+        }
         
-        
-        if(MyInput.isDown(MyInput.BUTTON1) && cl.isPlayerInVAC()){
-//           car2.getBody().applyForce(0, 100, 0, 0, true);
-            // player.getBody().applyLinearImpulse(0f, .60f, 16, 16, true);
-             //player.getBody().setGravityScale(0f);
-          
+        //** LOAD THE PROGRESS **//
+        if(MyInput.isDown(MyInput.BUTTON7)){
+            glu = new GameLoaderUtil("XMLTEST.xml");
+            
+            try{
+               glu.load();
+               
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            fileLoaded = true;
         }
         
         
+        if(MyInput.isDown(MyInput.BUTTON1) && cl.isPlayerInVAC()){
+            animationControl = 1;
+        }
+      
         if(MyInput.isPressed(MyInput.BUTTON2)){
            if(cl.isPlayerOnGround()){
                Game.res.getMusic("jumping").play();
                player.getBody().applyForceToCenter(0,325f, true);  
-           }
+               animationControl = 2;
+           } 
           
-           
         }
         
         if(MyInput.isDown(MyInput.BUTTON2) && cl.isPlayerInVAC()){
@@ -246,78 +309,132 @@ public class Play extends GameState {
                player.getBody().applyLinearImpulse(0f, 1.1f, 16, 16, true);
         }
         
-       
-       
         if(MyInput.isDown(MyInput.BUTTON3)){
-             
-              player.getBody().applyForce(8f, 0, 0, 0, true);  
-              player.update(.002f);
-              
+        
+            AN = 2;
+            
+            if(cl.isPlayerOnGround()){
+            player.getBody().applyForce(14f, 0, 0, 0, true);  
+            }
+            
+            else{
+                player.getBody().applyForce(11f, 0, 0, 0, true);
+            }
         }
         
-        if(MyInput.isDown(MyInput.BUTTON4)){
-         
-              player.getBody().applyForce(-8f, 0, 16, 16, true);     
-              player.update(.005f);
-            
+     
+        if(MyInput.isDown(MyInput.BUTTON4)){ 
+            player.setCurrentAnimation(0);
+            AN = 0;
+    
+           
+            CONTROLLER +=40;
+            if(cl.isPlayerOnGround()){
+                player.getBody().applyForce(-14f, 0, 16, 16, true);  
+            }
+            else{
+                player.getBody().applyForce(-11f, 0, 0, 0, true);
+            }
+        }
+       
+        if(MyInput.isReleased()){
+            CONTROLLER = 10;
         }
         
         /******JETPACK****/
-       
         if(MyInput.isDown(MyInput.BUTTON5)){
             if(player.getMana() > 0){
             Game.res.getMusic("jetPack").play();
             float XVelocity = player.getBody().getLinearVelocity().x;
             player.getBody().setLinearVelocity(XVelocity, 1.5f);
             player.decreaseMana(1);
+            player.update(.005f);
             }
         } 
+      
+        
+     
+      
+     
     }
     
+    //Michael, I love you! I don't know why you think I'm acting jumpy.
+    //I'm not trying to act jumpy, I'm just nervous about accidentally pissing my sister off
+    //and I'm nervous about my dad's surgery. But I kiss pinky promise you everything is okay!
+    //Tonight we're going to have a wonderful evening and I can't wait for it!!
+    //I love you so much, my Michael, and I always will no matter what :)
     
+    // I love you too, Gabrielle and I always will. 
+    
+    
+       @Override
     public void update(float dt){
         handleInput();
         
+        player.update(.005f);
+        
+        CONTROLLER--;
+       
+        if(CONTROLLER > 0){
+            //player.update(.005f);
+        }
+       
         world.step(dt, 8, 3);
         
-
+        
         Array<Body> bodies = cl.getDeadBodies();
         Array<Body> removableBP = cl.removeCollectedAmmo();
-         
-         if(level == 4){
-            //verticalAccelerationChambers.clear();
+       
+        if(fileLoaded){
+             int h2l = glu.returnHealth();
+             player.setHealth(h2l);
+        }
+        
+        
+        //LEVEL 4 STUFF
+         if(level == 4)
+         {
+            for(int i = 0; i < wallsOfDeath.size; i++){
+                wallsOfDeath.get(i).update(dt);
+            }
             for(int i = 0; i < verticalAccelerationChambers.size; i++){
                 verticalAccelerationChambers.get(i).update(dt);
+            }
+            for(int i = 0; i < HAC_ARRAY.size; i++){
+                HAC_ARRAY.get(i).update(dt);
             }
             for(int ctr = 0; ctr < sensors.size; ctr++){
                 sensors.get(ctr).update(dt);
             }
-            
             for(int a = 0; a < stoppers.size; a++){
                 stoppers.get(a).update(dt);
             }
+            updateMovingDoors();
+ 
+            for(int i = 0; i < movingDoors.size; i++){
+                 movingDoors.get(i).update(dt);
+            }   
             
-            
-            for(int door = 0; door < movingDoors.size; door++){
-                float yPos = movingDoors.get(0).getBody().getPosition().y;
-                
-                if(cl.sensorActivated()){
-                    if(yPos > 300/PPM){
-                    movingDoors.get(0).getBody().setLinearVelocity(0, -.1f);
+            for(int i = 0; i < fallingPlatforms.size; i++){
+                 
+                if(cl.fPActivated()){
+                    fallingPlatforms.get(i).getBody().setGravityScale(0f);
+                    fallingPlatforms.get(i).getBody().setType(BodyType.DynamicBody);
                     }
-                }
-                if(yPos < 270/PPM){
-                    movingDoors.get(0).getBody().setType(BodyType.StaticBody);
-                }
-                movingDoors.get(0).update(dt);
+                 
+                fallingPlatforms.get(i).update(dt);
             }
-           
         }
-           
-
+         
+         
+        // BASIC GAME EVENTS FOR EVERY LEVEL 
+        if(cl.WODCONTACT()){
+            Game.res.getMusic("hurt").play();
+            player.minusHealth(4);
+        }
         if(cl.isTouchingBomb()){
-            Game.res.getMusic("bomb").play();
-            player.minusHealth(1);
+            Game.res.getMusic("hurt").play();
+            player.minusHealth(4);
         }
 
         if(cl.sensorActivated()){
@@ -330,27 +447,37 @@ public class Play extends GameState {
         else{
              player.getBody().setGravityScale(1f);
         }
+        
+        if(cl.inHAC() && MyInput.isDown(MyInput.BUTTON3)) {
+            MAX_VELOCITY = 25f;
+             
+             player.getBody().setGravityScale(1f);
+           //  player.getBody().applyLinearImpulse(1.2f, .4f, 16, 16, true);
+             player.getBody().setLinearVelocity(23f, .05f);
+        }
+        else{
+           MAX_VELOCITY = 3f;
+        }
+        
+       
+        
+        
         ///*****CRYSTAL COLLECTION/REMOVAL *********///
-        for(int c = 0; c < bodies.size; c++)
-        {
-                Body b = bodies.get(c);
-                crystals.removeValue((BasicPowerUp) b.getUserData(), true);
-                world.destroyBody(bodies.get(c));
-                int numCrystals = player.getNumCrystals();
-                player.collectCrystal();
+        for(int c = 0; c < bodies.size; c++){
+            Body b = bodies.get(c);
+            crystals.removeValue((BasicPowerUp) b.getUserData(), true);
+            world.destroyBody(bodies.get(c));
+            int numCrystals = player.getNumCrystals();
+            player.collectCrystal();
 
-                if(player.getMana() < player.getMaxMana())
-                {
-                        player.addMana(100);
-                        
-                        if(player.getMana() > player.getMaxMana()){
-                            player.setMana(player.getMaxMana());
-                        }
+            if(player.getMana() < player.getMaxMana()){
+                player.addMana(100);
+                if(player.getMana() > player.getMaxMana()){
+                    player.setMana(player.getMaxMana());
                 }
-
-                    Game.res.getMusic("crystalPickup").play();
-                   
-        }//END FOR LOOP
+            }
+            Game.res.getMusic("crystalPickup").play();
+        }/**** END FOR LOOP***/
         
         bodies.clear();
        
@@ -377,9 +504,9 @@ public class Play extends GameState {
         }
        
         /***POSITIONING OF MOVING PLATFORMS!!!****/
-        levelThreeMP();
+        PMP();
+        
         for(int a = 0; a < movingPlatforms.size; a++){
-             
           movingPlatforms.get(a).update(dt);
         }
         
@@ -396,34 +523,41 @@ public class Play extends GameState {
         if(player.getHealth() >= player.getMaxHealth()){
             player.setHealth(player.getMaxHealth());
         }
+        if(player.getNumCrystals() == player.getTotalCrystals()){
+            gsm.setState(GameStateManager.STORE);
+        }
         System.out.println(TIMER);
+        
     }
     
+   
        @Override
     public void render(){
+         
+        
         Gdx.gl20.glClear(GL_COLOR_BUFFER_BIT);
         cam.position.set(player.getPosition().x * PPM + Game.V_WIDTH /8,
                 player.getPosition().y * PPM + Game.V_HEIGHT /8 , 0);
         
         sb.setProjectionMatrix(hudCam.combined);
-          
+        currSprite = TextureRegion.split(tex, 30, 43)[AN];
+        player.Animate(currSprite, 1/12f);
+        
         if(level == 3){
-        for (Background background : backgrounds) {
-               background.render(sb);
+        for (Background background : backgrounds){
+            background.render(sb);
+            }
         }
-        }
-        //draw tile map
+ 
         cam.update();
         tmr.setView(cam);
-        
         tmr.render();
         sb.setProjectionMatrix(cam.combined);
         rh.setCombinedMatrix(cam.combined);
-        
+    
         Vector2 vel = player.getBody().getLinearVelocity();
         Vector2 pos = player.getBody().getPosition();
       
-        
         player.render(sb);
 
         rh.updateAndRender();
@@ -439,6 +573,32 @@ public class Play extends GameState {
                 bulletPackages.get(bPitr).render(sb);
             }
         }
+        
+        
+        if(level == 4){
+            for(int i = 0; i < wallsOfDeath.size; i++){
+                WallODeath wod = wallsOfDeath.get(i);
+                wallsOfDeath.get(i).render(sb);
+            }
+            for(int i = 0; i < verticalAccelerationChambers.size; i++){
+                verticalAcceleratorArea VAC = verticalAccelerationChambers.get(i);
+            }
+            for(int i = 0; i < HAC_ARRAY.size; i++){
+                HAC_ARRAY.get(i).render(sb);
+            }
+            for(int c = 0; c < sensors.size; c++){
+                sensors.get(c).render(sb);
+            }
+            
+            for(int mDi = 0; mDi < movingDoors.size; mDi++){
+                movingDoors.get(mDi).render(sb);
+            }
+            for(int i = 0; i < fallingPlatforms.size; i++){
+                fallingPlatforms.get(i).render(sb);
+            }
+        }
+        
+        
         for(int a = 0; a < movingPlatforms.size; a++){
             MovingPlatform current = movingPlatforms.get(a);
             movingPlatforms.get(a).render(sb);
@@ -449,19 +609,6 @@ public class Play extends GameState {
             fallingBombs.get(b).render(sb);
         }
         
-        if(level == 4){
-            for(int i = 0; i < verticalAccelerationChambers.size; i++){
-                verticalAcceleratorArea VAC = verticalAccelerationChambers.get(i);
-                verticalAccelerationChambers.get(i).render(sb);
-            }
-            for(int c = 0; c < sensors.size; c++){
-                sensors.get(c).render(sb);
-            }
-            
-            for(int mDi = 0; mDi < movingDoors.size; mDi++){
-                movingDoors.get(mDi).render(sb);
-            }
-        }
         
         if(Math.abs(vel.x) > MAX_VELOCITY){			
             vel.x = Math.signum(vel.x) * MAX_VELOCITY;
@@ -482,8 +629,6 @@ public class Play extends GameState {
        // draw hud
 	sb.setProjectionMatrix(hudCam.combined);
 	hud.render(sb);
-        
-        
     }
     
     
@@ -500,6 +645,7 @@ public class Play extends GameState {
         shape.setAsBox( 14 / PPM, 14 / PPM);
         
         fdef.shape = shape;
+        fdef.friction = .8f;
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
         MassData md = new MassData();
         md.mass = 1f;
@@ -517,11 +663,8 @@ public class Play extends GameState {
         fdef.filter.maskBits  = B2DVars.BIT_BLOCKS;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData("foot");
-        
-      
-        
 //create rectangular arms
-        player = new Player(body, null);    
+        player = new Player(body, null, AN);    
         body.setUserData(player);
         shape.dispose();
     }
@@ -560,11 +703,10 @@ public class Play extends GameState {
                 
                 ChainShape cs = new ChainShape();
                 Vector2[] v = new Vector2[4];
-                v[0] = new Vector2(-tileSize /2 /PPM, -tileSize /2 /PPM);
-                //top left
-                v[1] = new Vector2(-tileSize /2 /PPM, tileSize /2 /PPM);
-                v[2] =  new Vector2(tileSize /2 /PPM, tileSize /2 /PPM);
-                v[3] = new Vector2(tileSize/2 /PPM, -tileSize/2/PPM);
+                v[0] = new Vector2(-tileSize /2 /PPM, -tileSize /2 /PPM);//bottomLeft
+                v[1] = new Vector2(-tileSize /2 /PPM, tileSize /2 /PPM);//topleft
+                v[2] =  new Vector2(tileSize /2 /PPM, tileSize /2 /PPM);//topRight
+                v[3] = new Vector2(tileSize/2 /PPM, -tileSize/2/PPM);//bottomRight
                 
                
                 cs.createChain(v);
@@ -680,7 +822,7 @@ public class Play extends GameState {
             
             bdef.position.set(x-(15/PPM),y);
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(10/PPM, 55/PPM);
+            shape.setAsBox(16/PPM, 55/PPM);
             fdef.shape = shape;
             
             //COLLECTABLES SHOULD BE SENSORS
@@ -694,7 +836,38 @@ public class Play extends GameState {
             verticalAccelerationChambers.add(VAC);
             body.setUserData(VAC);
             shape.dispose();
+           
+        }
+    }
+    
+     /** VERTICAL ACCELERATOR CHAMBERS **/
+    private void createHACS(){ 
+        HAC_ARRAY = new Array<>();
+        MapLayer layer = tileMap.getLayers().get("HAC");
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        
+        for(MapObject mObj : layer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+            float x = (float) mObj.getProperties().get("x") / PPM;
+            float y = (float) mObj.getProperties().get("y") / PPM;
             
+            bdef.position.set(x-(15/PPM),y);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(395/PPM, 14/PPM);
+            fdef.shape = shape;
+            
+            //COLLECTABLES SHOULD BE SENSORS
+            fdef.isSensor = true;
+            
+            fdef.filter.categoryBits = B2DVars.BIT_VAC;
+            fdef.filter.maskBits = B2DVars.BIT_PLAYER;
+            Body body =  world.createBody(bdef);
+            HAC hac = new HAC(body);
+            body.createFixture(fdef).setUserData("HAC");
+            HAC_ARRAY.add(hac);
+            body.setUserData(hac);
+            shape.dispose();
            
         }
     }
@@ -723,13 +896,66 @@ public class Play extends GameState {
                 fdef.filter.categoryBits = B2DVars.BIT_BALL;
                 Body body = world.createBody(bdef);
                 body.setLinearVelocity(platformStartVelocity);
-                MovingPlatform mp2 = new MovingPlatform(body);
+                MovingPlatform mp = new MovingPlatform(body);
                 body.createFixture(fdef).setUserData("MP");
-                movingPlatforms.add(mp2);
+                movingPlatforms.add(mp);
                 shape.dispose();
         }
     }
     
+    private void createWall_O_Death(){
+        wallsOfDeath = new Array<>();
+        MapLayer layer = tileMap.getLayers().get("wod");
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        
+        for(MapObject mapObj : layer.getObjects()){
+                PolygonShape shape = new PolygonShape();
+                float x = (float) mapObj.getProperties().get("x") / PPM;
+                float y = (float) mapObj.getProperties().get("y") / PPM;
+                bdef.position.set(x, y);
+                bdef.type = BodyType.KinematicBody;
+                shape.setAsBox(2/PPM, 80/ PPM);
+                fdef.shape = shape;
+                fdef.friction = 1f;
+                fdef.filter.categoryBits = B2DVars.BIT_BLOCKS;
+                Body body = world.createBody(bdef);
+                body.setLinearVelocity(.1f, 0);
+                WallODeath wod = new WallODeath(body);
+                body.createFixture(fdef).setUserData("WOD");
+                wallsOfDeath.add(wod);
+                shape.dispose();
+            
+        }
+    }
+    
+     private void createFallingPlatforms(){
+         fallingPlatforms = new Array<>();
+         BodyDef bdef = new BodyDef();
+         FixtureDef fdef = new FixtureDef();
+         MapLayer layer = tileMap.getLayers().get("fP");
+         PolygonShape shape = new PolygonShape();
+         MassData md = new MassData();
+         md.mass = (10f);
+         
+         for(MapObject mapObj : layer.getObjects()){
+              float x = (float) mapObj.getProperties().get("x") / PPM;
+              float y = (float) mapObj.getProperties().get("y") / PPM;
+              bdef.position.set(x, y);
+              bdef.type = BodyType.DynamicBody;
+              bdef.gravityScale = 0f;
+              shape.setAsBox(22/PPM, 18/PPM);
+              fdef.shape = shape;
+              fdef.friction = 1.5f;
+              fdef.filter.categoryBits = B2DVars.BIT_BLOCKS;
+              Body body = world.createBody(bdef);
+              body.setMassData(md);
+              FallingPlatform fp = new FallingPlatform(body);
+              body.createFixture(fdef).setUserData("fP");
+              fallingPlatforms.add(fp);
+              
+         }
+     }
      private void createMovingDoor(){
         
         movingDoors = new Array<>();
@@ -759,11 +985,7 @@ public class Play extends GameState {
     }
      
      
-   /**ConeLight(RayHandler rayHandler, int rays, Color color,
-			float distance, float x, float y, float directionDegree,
-			float coneDegree)*/
-    
-   
+ 
     
     //***** FALLING BOMBS THE PLAYER MUST AVOID****//
     public void createFallingBomb(){
@@ -942,9 +1164,8 @@ public class Play extends GameState {
     }
     
     
-    
-    
-    public void levelThreeMP(){
+   
+    public void PMP(){
         if(level ==3){
              Vector2 platformPos = movingPlatforms.get(0).getBody().getPosition();
              Vector2 platformPos2 = movingPlatforms.get(1).getBody().getPosition();
@@ -959,7 +1180,6 @@ public class Play extends GameState {
                  if(platformPos.x > 225/PPM && platformPos.x < 254/PPM && movingPlatforms.get(0).getBody().getLinearVelocity().x > 0){
                     movingPlatforms.get(0).getBody().setLinearVelocity(.75f,0);
                 }
-
                  //P2
                  if(platformPos2.x >= 1160/PPM && platformPos2.x < 1400/PPM && movingPlatforms.get(1).getBody().getLinearVelocity().x >0){
                     movingPlatforms.get(1).getBody().setLinearVelocity(-.5f, 0);
@@ -975,7 +1195,52 @@ public class Play extends GameState {
 
             }
         
-        
+        if(level == 4){
+            Vector2 platformPos = movingPlatforms.get(0).getBody().getPosition();
+            
+            //P1
+             if(platformPos.x >= 575/PPM && platformPos.x < 620/PPM 
+             && movingPlatforms.get(0).getBody().getLinearVelocity().x >0){
+                    movingPlatforms.get(0).getBody().setLinearVelocity(-.5f, 0);
+                }
+                 if(platformPos.x < 420 / PPM && movingPlatforms.get(0).getBody().getLinearVelocity().x < 0){
+                    movingPlatforms.get(0).getBody().setLinearVelocity(.75f, 0);
+                }
+                 if(platformPos.x > 425/PPM && platformPos.x < 454/PPM && movingPlatforms.get(0).getBody().getLinearVelocity().x > 0){
+                    movingPlatforms.get(0).getBody().setLinearVelocity(.75f,0);
+                }
+        }
+    }
+    
+    
+    public void updateMovingDoors(){
+        if(level == 4){
+          for(int door = 0; door < movingDoors.size; door++){
+                float yPos = movingDoors.get(0).getBody().getPosition().y;
+                float yPos1 = movingDoors.get(1).getBody().getPosition().y;
+                
+                if(cl.sensorActivated()){
+                    if(yPos > 300/PPM){
+                    movingDoors.get(0).getBody().setLinearVelocity(0, -.2f);
+                    }
+                }
+                if(yPos < 270/PPM){
+                    movingDoors.get(0).getBody().setType(BodyType.StaticBody);
+                }
+               
+                
+                 if(cl.sensorActivated()){
+                    if(yPos > 345/PPM){
+                    movingDoors.get(1).getBody().setLinearVelocity(0, -.3f);
+                    }
+                }
+                 
+                if(yPos < 302/PPM){
+                    movingDoors.get(1).getBody().setType(BodyType.StaticBody);
+                } 
+            }
+           
+        }
     }
        @Override
     public void dispose(){}

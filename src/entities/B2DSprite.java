@@ -15,7 +15,7 @@ import handlers.B2DVars;
  */
 public class B2DSprite {
     protected Body body;
-    protected Animation animation;
+    public Animation animation;
     protected float width;
     protected float height;
     
@@ -26,6 +26,7 @@ public class B2DSprite {
     }
     
     public void setAnimation(TextureRegion[] reg, float delay){
+        
         animation.setFrames(reg,delay);
         width = reg[0].getRegionWidth();
         height = reg[0].getRegionHeight();

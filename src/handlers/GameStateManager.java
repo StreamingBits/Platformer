@@ -9,6 +9,7 @@ import states.GameState;
 import states.LevelSelect;
 import states.Menu;
 import states.Play;
+import states.Store;
 
 public class GameStateManager {
 	
@@ -19,6 +20,7 @@ public class GameStateManager {
 	public static final int MENU = 83774392;
 	public static final int PLAY = 388031654;
 	public static final int LEVEL_SELECT = 9238732;
+        public static final int STORE = 999038023;
 	
 	public GameStateManager(Game game) {
 		this.game = game;
@@ -40,6 +42,7 @@ public class GameStateManager {
 		if(state == MENU) return new Menu(this);
 		if(state == PLAY) return new Play(this);
 		if(state == LEVEL_SELECT) return new LevelSelect(this);
+                if(state == STORE) return new Store(this);
 		return null;
 	}
 	

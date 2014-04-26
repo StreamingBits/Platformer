@@ -23,7 +23,7 @@ public class verticalAcceleratorArea extends B2DSprite{
         super(body);
         Texture tex = Game.res.getTexture("VAC");
         TextureRegion[] sprites = TextureRegion.split(tex, 8, 8)[0];
-        setAnimation(sprites, 1 / 12f);
+        setAnimation(sprites, 1 / 1f);
              
         
     }

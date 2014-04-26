@@ -9,7 +9,7 @@ public class MyInput {
     public static boolean[] keys;
     public static boolean[] pkeys;
     
-    public static final int NUM_KEYS = 5;
+    public static final int NUM_KEYS = 7;
     public static int x;
     public static int y;
     public static final int BUTTON1 = 0;
@@ -17,6 +17,8 @@ public class MyInput {
     public static final int BUTTON3 = 2;
     public static final int BUTTON4 = 3;
     public static final int BUTTON5 = 4;
+    public static final int BUTTON6 = 5;
+    public static final int BUTTON7 = 6;
     
   
    public static boolean down;

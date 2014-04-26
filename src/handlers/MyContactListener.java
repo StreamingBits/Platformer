@@ -23,9 +23,12 @@ public class MyContactListener implements ContactListener {
     private boolean playerOnGround;
     private boolean bombContact;
     private boolean VACContact;
+    private boolean HACContact;
     private boolean f2Crystal = false;
+    private boolean WODContact;
     private boolean sensorContact;
     private boolean doorHitsSensor;
+    private boolean fPContact;
     
     private int numFootContacts;
     private Array<Body> bodiesToRemove; //CRYSTAL PICKUPS TO REMOVE
@@ -37,82 +40,109 @@ public class MyContactListener implements ContactListener {
         bodiesToRemove = new Array<>();
         bodiesToRemove2 = new Array<>();
     }
+    
     public void beginContact(Contact c){
         Fixture fa = c.getFixtureA();
         Fixture fb = c.getFixtureB();
        
-    if(fa == null || fb==null) return;
-    
-    if(fa.getUserData() != null && fa.getUserData().equals("foot")){
-        playerOnGround = true;
-        numFootContacts++;
-    }
-    
-    if(fb.getUserData() != null && fb.getUserData().equals("foot")){
-         playerOnGround = true;
-         numFootContacts++;
-    }
-    
-    if(fa.getUserData() != null && fa.getUserData().equals("sensor")){
-        sensorContact = true;
-    }
-    
-    if(fb.getUserData() != null && fb.getUserData().equals("sensor")){
-        sensorContact = true;
-    }
+        if(fa == null || fb==null) return;
 
-    if(fa.getUserData() != null && fa.getUserData().equals("crystals")){
-        numCrystalContacts++;
-        bodiesToRemove.add(fa.getBody());
-    }
-
-    if(fb.getUserData() != null && fb.getUserData().equals("crystals")){
-        numCrystalContacts++;
-        bodiesToRemove.add(fb.getBody());
-    }
-
-
-    
-
-    if(fa.getUserData() != null && fa.getUserData().equals("BULLETPACK")){
-        bodiesToRemove2.add(fa.getBody());
-    }
-
-    if(fb.getUserData() != null && fb.getUserData().equals("BULLETPACK")){
-        bodiesToRemove2.add(fb.getBody());
-    }
-
-    
-    if(fa.getUserData() != null && fb.getUserData() != null){
-        if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("BOMB")){
-            bombContact = true;
+        if(fa.getUserData() != null && fa.getUserData().equals("foot")){
+            playerOnGround = true;
+            numFootContacts++;
         }
 
-        if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("BOMB")){
-            bombContact = true;
-        }
-    }
-
-    /** DOOR HITS SENSOR**/
-     if(fa.getUserData() != null && fb.getUserData() != null){
-        if(fb.getUserData().equals("mD") && fa.getUserData().equals("stopper")){
-            doorHitsSensor = true;
+        if(fb.getUserData() != null && fb.getUserData().equals("foot")){
+             playerOnGround = true;
+             numFootContacts++;
         }
 
-        if(fa.getUserData().equals("mD") && fb.getUserData().equals("stopper")){
-            doorHitsSensor = true;
-        }
-    }
-    
-     if(fa.getUserData() != null && fb.getUserData() != null){
-        if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("VAC")){
-            VACContact = true;
+        if(fa.getUserData() != null && fa.getUserData().equals("sensor")){
+            sensorContact = true;
         }
 
-        if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("VAC")){
-            VACContact = true;
+        if(fb.getUserData() != null && fb.getUserData().equals("sensor")){
+            sensorContact = true;
         }
-    }
+
+        if(fa.getUserData() != null && fa.getUserData().equals("crystals")){
+            numCrystalContacts++;
+            bodiesToRemove.add(fa.getBody());
+        }
+
+        if(fb.getUserData() != null && fb.getUserData().equals("crystals")){
+            numCrystalContacts++;
+            bodiesToRemove.add(fb.getBody());
+        }
+
+        if(fa.getUserData() != null && fa.getUserData().equals("BULLETPACK")){
+            bodiesToRemove2.add(fa.getBody());
+        }
+
+        if(fb.getUserData() != null && fb.getUserData().equals("BULLETPACK")){
+            bodiesToRemove2.add(fb.getBody());
+        }
+
+
+        if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("BOMB")){
+                bombContact = true;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("BOMB")){
+                bombContact = true;
+            }
+        }
+
+         if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("WOD")){
+                WODContact = true;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("WOD")){
+                WODContact = true;
+            }
+        }
+        
+        
+        /** DOOR HITS SENSOR**/
+         if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("mD") && fa.getUserData().equals("stopper")){
+                doorHitsSensor = true;
+            }
+
+            if(fa.getUserData().equals("mD") && fb.getUserData().equals("stopper")){
+                doorHitsSensor = true;
+            }
+        }
+
+         if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("VAC")){
+                VACContact = true;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("VAC")){
+                VACContact = true;
+            }
+         }
+          
+         if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("HAC")){
+                HACContact = true;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("HAC")){
+                HACContact = true;
+            }
+         }
+
+         if(fa.getUserData() != null && fa.getUserData().equals("fP")){
+             fPContact = true;
+         }
+
+         if(fb.getUserData() != null && fb.getUserData().equals("fP")){
+             fPContact = true;
+         }
 
       
     }
@@ -129,23 +159,43 @@ public class MyContactListener implements ContactListener {
             numFootContacts--;
             numCrystalContacts--;
         }
+        
         if(fb.getUserData() != null && fb.getUserData().equals("foot")){
             playerOnGround = false;
             numFootContacts--;
             numCrystalContacts--;
         }
         
-    
         if(fa.getUserData() != null && fb.getUserData() != null){
-        if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("VAC")){
-            VACContact = false;
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("VAC")){
+                VACContact = false;
         }
 
         if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("VAC")){
             VACContact = false;
-        }
+            }
         }
         
+        if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("HAC")){
+                HACContact = false;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("HAC")){
+                HACContact = false;
+            }
+         }
+        
+      if(fa.getUserData() != null && fb.getUserData() != null){
+            if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("WOD")){
+                WODContact = false;
+            }
+
+            if(fa.getUserData().equals("PLAYER") && fb.getUserData().equals("WOD")){
+                WODContact = false;
+            }
+        }
+      
       if(fa.getUserData() != null && fb.getUserData() != null){
         if(fb.getUserData().equals("PLAYER") && fa.getUserData().equals("BOMB")){
             bombContact = false;
@@ -175,6 +225,17 @@ public class MyContactListener implements ContactListener {
         sensorContact = false;
     }
 
+     
+     if(fa.getUserData() != null && fa.getUserData().equals("fP")){
+         fPContact = false;
+     }
+     
+     if(fb.getUserData() != null && fb.getUserData().equals("fP")){
+         fPContact = false;
+     }
+
+    
+    
 
     }
     
@@ -189,11 +250,14 @@ public class MyContactListener implements ContactListener {
 
     public boolean isPlayerOnGround() { return playerOnGround; }
     public boolean isPlayerInVAC() { return VACContact; } 
+    public boolean inHAC() { return HACContact; }
     public Array<Body> getDeadBodies() { return bodiesToRemove; } 
     public Array<Body> removeCollectedAmmo() { return bodiesToRemove2; }
     public boolean footTouchingCrystal() { return f2Crystal; }
     public boolean isTouchingBomb() { return bombContact; } 
     public boolean sensorActivated(){ return sensorContact; } 
     public boolean stopDoor() { return doorHitsSensor; }
+    public boolean fPActivated() { return fPContact; }
+    public boolean WODCONTACT() { return WODContact; }
 }
 

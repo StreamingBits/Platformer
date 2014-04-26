@@ -31,8 +31,8 @@ public class FallingBomb extends B2DSprite {
    public FallingBomb(Body body){
         super(body);
         Texture tex2 = Game.res.getTexture("bomb");
-        TextureRegion[] sprites = TextureRegion.split(tex2, 32, 32)[0];
-        setAnimation(sprites, 1 / 9f); 
+        TextureRegion[] sprites = TextureRegion.split(tex2,32, 32)[0];
+        setAnimation(sprites, 1 / 6f); 
     }
    
    private void setVelocity(Vector2 velocity1){

@@ -37,8 +37,13 @@ public class MyInputProcessor extends InputAdapter{
             MyInput.setKey(MyInput.BUTTON5, true);
         }
         
-       
-
+        if(k == Keys.S){
+            MyInput.setKey(MyInput.BUTTON6, true);
+        }
+        
+        if(k == Keys.L){
+            MyInput.setKey(MyInput.BUTTON7, true);
+        }
         return true;
     } 
 
@@ -61,6 +66,14 @@ public class MyInputProcessor extends InputAdapter{
         if(k == Keys.SPACE){
             MyInput.setKey(MyInput.BUTTON5, false);
         }
+        
+        if(k == Keys.S){
+            MyInput.setKey(MyInput.BUTTON6, false);
+        }
+        if(k == Keys.L){
+            MyInput.setKey(MyInput.BUTTON7, false);
+        }
+
         return false;
     }
 

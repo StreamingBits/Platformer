@@ -42,27 +42,31 @@ public class Player extends B2DSprite {
     public int currentAnimation;
     private static final int RIGHT = 0;
     private static final int LEFT = 1;
-    private boolean facingRight;
+    private boolean facingLeft;
     
             
-    public Player(Body body, ArrayList<Bullet> bullets){
+    public Player(Body body, ArrayList<Bullet> bullets, int AN){
         super(body);
-        
+        Texture tex = Game.res.getTexture("Pic 1");
+       
         this.bullets = bullets;
-      
-        tex = Game.res.getTexture("Pic 1");
-        TextureRegion[] rightSprite = TextureRegion.split(tex, 30, 43)[0];
-        //TextureRegion[] left = TextureRegion.split(tex, 30, 42)[0];
-        TextureRegion[]  leftSprite = TextureRegion.split(tex, 30, 4)[2];
-        setAnimation(rightSprite, 1 / 12f);
         radians = 3.145f / 2f;
     }
+   
+    public void Animate(TextureRegion[] currSprite, float delay){
+        setAnimation(currSprite, 1/12f);
+        
+    }
     
-    
- 
     public void shoot(){
         if(numBulletsFired == MAX_BULLETS_AT_ONCE){return;}
       
+    }
+    public void setLeft(){
+        facingLeft = true;
+    }
+    public void setRight(){
+        facingLeft = false;
     }
     
     //** HEALTH STUFF****///
@@ -119,6 +123,7 @@ public class Player extends B2DSprite {
     
     public int getNumCrystals() { return numCrystals; }
     
+  
     public void setTotalCrystals(int i) { totalCrystals = i; }
     
     public int getTotalCrystals() { return totalCrystals; }

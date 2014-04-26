@@ -21,12 +21,7 @@ import platformer.Game;
  */
 public class MovingPlatform extends B2DSprite{
     
-    protected Vector2 velocity;
-    protected Vector2 position;
-    protected BodyDef bdef;
-    protected PolygonShape poly;
-    protected FixtureDef fdef;
-    
+ 
     
    public MovingPlatform(Body body){
         super(body);
@@ -35,18 +30,7 @@ public class MovingPlatform extends B2DSprite{
         setAnimation(sprites, 1 / 1f); 
     }
    
-   private void setVelocity(Vector2 velocity1){
-       velocity = velocity1;
-   }
-   
-   private void setPosition(Vector2 position1){
-       position = position1;
-   }
-   
-   
-   private Vector2 getVelocity(){
-    return velocity;   
-   }
+  
        
    
 }

@@ -29,6 +29,7 @@ public class Menu extends GameState {
 	private Background bg;
 	private Animation animation;
 	private GameButton playButton;
+        private GameButton storeButton;
 	
 	private World world;
 	private Box2DDebugRenderer b2dRenderer;
@@ -43,7 +44,7 @@ public class Menu extends GameState {
 		bg = new Background(new TextureRegion(tex), cam, 1f);
 		bg.setVector(-40, 10);
 		
-		tex = Game.res.getTexture("bunny");
+		tex = Game.res.getTexture("Pic 1");
 		TextureRegion[] reg = new TextureRegion[4];
 		for(int i = 0; i < reg.length; i++) {
 			reg[i] = new TextureRegion(tex, i * 32, 0, 32, 32);
@@ -51,8 +52,13 @@ public class Menu extends GameState {
 		animation = new Animation(reg, 1 / 12f);
 		
 		tex = Game.res.getTexture("hud");
+                
 		playButton = new GameButton(new TextureRegion(tex, 0, 34, 58, 27), 160, 100, cam);
 		
+                Texture tex2 = Game.res.getTexture("storeBtn");
+                storeButton = new GameButton(new TextureRegion(tex2, 0,0, 88, 27), 160, 200, cam);
+                
+              
 		cam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
 		
 		world = new World(new Vector2(0, -9.8f * 5), true);
@@ -100,20 +106,6 @@ public class Menu extends GameState {
 		}
 		blocks = new Array<B2DSprite>();
 		
-		int[][] spellBlock = {
-			{1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1},
-			{1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0},
-			{1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-			{1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0},
-			{1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1}
-		};
-		int[][] spellBunny = {
-			{1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-			{1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0},
-			{1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0},
-			{1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0},
-			{1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
-		};
 		
 		// top blocks
 		for(int row = 0; row < 5; row++) {
@@ -169,9 +161,15 @@ public class Menu extends GameState {
 		
 		// mouse/touch input
 		if(playButton.isClicked()) {
-//			Game.res.getSound("crystal").play();
+        	    Game.res.getMusic("select").play();
 			//gsm.setState(GameStateManager.PLAY);
+                    
                     gsm.setState(GameStateManager.LEVEL_SELECT);
+		}
+                
+                if(storeButton.isClicked()) {
+                    Game.res.getMusic("select").play();
+                    gsm.setState(GameStateManager.STORE);
 		}
 		
 	}
@@ -184,10 +182,11 @@ public class Menu extends GameState {
 		
 		world.step(dt / 5, 8, 3);
 		
-		bg.update(dt);
+		//bg.update(dt);
 		animation.update(dt);
 		
 		playButton.update(dt);
+                storeButton.update(dt);
 		
 	}
 	
@@ -200,7 +199,7 @@ public class Menu extends GameState {
 		
 		// draw button
 		playButton.render(sb);
-		
+		storeButton.render(sb);
 		// draw bunny
 		sb.begin();
 		sb.draw(animation.getFrame(), 146, 31);
